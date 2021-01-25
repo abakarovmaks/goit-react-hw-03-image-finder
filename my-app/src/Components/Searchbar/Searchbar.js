@@ -1,39 +1,49 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { FiSearch } from 'react-icons/fi';
+import { IconContext } from 'react-icons';
+import { toast } from 'react-toastify';
 import styles from './Searchbar.module.css';
 
 export default class Searchbar extends Component {
   state = {
-    input: '',
+    value: '',
   };
 
-  onChangeInput = (e) => {
-    this.setState({ input: e.target.value.toLowerCase() });
+  handleInput = (e) => {
+    this.setState({ value: e.target.value });
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { onSubmit } = this.props;
-    onSubmit(this.state.input);
-    this.setState({ input: '' });
+    const query = this.state.value.toLowerCase().trim();
+    if (query === '') {
+      toast.error('Please enter a query');
+      this.button.current.blur();
+      return;
+    }
+    this.props.getSearchQuery(query);
+    this.setState({ value: '' });
+    this.button.current.blur();
   };
 
   render() {
+    const { value } = this.state;
     return (
-      <header className={styles.searchbar}>
+      <header className={styles.header}>
         <form className={styles.form} onSubmit={this.handleSubmit}>
-          <button type="submit" name="Search" className={styles.button}>
-            <span className={styles.span}>Search</span>
+          <button type="submit" className={styles.button} ref={this.button}>
+            <IconContext.Provider value={{ size: '16px' }}>
+              <FiSearch />
+            </IconContext.Provider>
           </button>
 
           <input
             className={styles.input}
             type="text"
-            autocomplete="off"
-            autofocus
+            value={value}
             placeholder="Search images and photos"
-            value={this.state.input}
-            onChange={this.onChangeInput}
+            onChange={this.handleInput}
           />
         </form>
       </header>
@@ -42,5 +52,5 @@ export default class Searchbar extends Component {
 }
 
 Searchbar.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+  getSearchQuery: PropTypes.func.isRequired,
 };
