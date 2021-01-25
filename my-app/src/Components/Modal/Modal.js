@@ -20,16 +20,16 @@ export default class Modal extends Component {
     if (e.code === 'Escape') {
       this.props.toggleModal();
     }
+  };
 
-    handleBackdropClick = (e) => {
-      if (e.target === e.currentTarget) {
-        this.props.toggleModal();
-      }
-    };
-
-    handleBtnClick = () => {
+  handleBackdropClick = (e) => {
+    if (e.target === e.currentTarget) {
       this.props.toggleModal();
-    };
+    }
+  };
+
+  handleBtnClick = () => {
+    this.props.toggleModal();
   };
 
   render() {

@@ -24,7 +24,6 @@ export default class Searchbar extends Component {
     }
     this.props.getSearchQuery(query);
     this.setState({ value: '' });
-    this.button.current.blur();
   };
 
   render() {

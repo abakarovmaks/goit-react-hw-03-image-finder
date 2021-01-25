@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { toast } from 'react-toastify';
-import { css } from '@emotion/core';
 import HashLoader from 'react-spinners/HashLoader';
 import ProgressiveImage from 'react-progressive-image';
 import PropTypes from 'prop-types';
-import styles from './ImageGalleryView.module.css';
-import imageAPI from '../../services/pixabay-api';
-import initialScreenPlaceholder from '../../images/initialScreenPlaceholder.jpg';
-import errorPlaceholder from '../../images/errorPlaceholder.jpg';
-import Modal from '../Modal';
+import imageAPI from '../../services/pixabey-api';
+import findSomething from '../../images/findSomething.png';
+import errorPlaceholder from '../../images/error.jpg';
+import Modal from '../Modal/Modal';
 import ImageGallery from '../ImageGallery/ImageGallery';
+import styles from './ImageGalleryView.module.css';
 
 const Status = {
   IDLE: 'idle',
@@ -18,7 +17,7 @@ const Status = {
   REJECTED: 'rejected',
 };
 
-class ImageGalleryView extends Component {
+export default class ImageGalleryView extends Component {
   state = {
     images: null,
     totalSearchResults: null,
@@ -141,7 +140,7 @@ class ImageGalleryView extends Component {
     if (status === Status.IDLE) {
       return (
         <div>
-          <img src={initialScreenPlaceholder} alt="please enter a query" />
+          <img src={findSomething} alt="please enter a query" />
         </div>
       );
     }
@@ -149,7 +148,7 @@ class ImageGalleryView extends Component {
     if (status === Status.PENDING) {
       return (
         <HashLoader
-          css={css`
+          css={`
             margin-top: 80px;
           `}
           size={250}
@@ -170,10 +169,7 @@ class ImageGalleryView extends Component {
     if (status === Status.RESOLVED) {
       return (
         <>
-          <ImageGallery
-            images={images}
-            showBigImageInModal={this.showBigImageInModal}
-          />
+          <ImageGallery images={images} imageModal={this.imageModal} />
           {modalIsOpen && (
             <Modal toggleModal={this.toggleModal}>
               <ProgressiveImage src={imageInModal} placeholder={activeImage}>
@@ -193,8 +189,6 @@ class ImageGalleryView extends Component {
     }
   }
 }
-
-export default ImageGalleryView;
 
 ImageGalleryView.propTypes = {
   searchQuery: PropTypes.string.isRequired,

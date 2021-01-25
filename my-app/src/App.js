@@ -4,7 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Container from './Components/Container/Container';
 import Searchbar from './Components/Searchbar/Searchbar';
 import Button from './Components/Button/Button';
-import ImageGalleryView from './Components/ImageGalleryView/';
+import ImageGalleryView from './Components/ImageGalleryView/ImageGalleryView';
 
 export default class App extends Component {
   state = {
@@ -17,7 +17,7 @@ export default class App extends Component {
     this.setState({ searchQuery: query });
   };
 
-  updateSearchPage = () => {
+  updatePage = () => {
     this.setState((prevState) => ({ searchPage: prevState.searchPage + 1 }));
   };
 
@@ -41,9 +41,7 @@ export default class App extends Component {
           resetSearchPage={this.resetSearchPage}
           updateImageAvialability={this.updateImageAvialability}
         />
-        {moreImagesAvailable && (
-          <Button updateSearchPage={this.updateSearchPage} />
-        )}
+        {moreImagesAvailable && <Button updatePage={this.updatePage} />}
         <ToastContainer autoClose={3000} />
       </Container>
     );
