@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Image from '../Image';
 import { createPortal } from 'react-dom';
+import { FaWindowClose } from 'react-icons/fa';
+import { IconContext } from 'react-icons';
 import styles from './Modal.module.css';
 
 const modalRoot = document.querySelector('#modal-root');
@@ -25,25 +26,29 @@ export default class Modal extends Component {
         this.props.toggleModal();
       }
     };
+
+    handleBtnClick = () => {
+      this.props.toggleModal();
+    };
   };
 
   render() {
-    const { src, alt } = this.props;
     return createPortal(
-      <div className={styles.overlay} onClick={this.handleBackdropClick}>
-        <Image src={src} alt={alt} className={styles.image} />
+      <div className={styles.backdrop} onClick={this.handleBackdropClick}>
+        <div className={styles.content}>
+          <button className={styles.closeIcon} onClick={this.handleBtnClick}>
+            <IconContext.Provider value={{ size: '36px' }}>
+              <FaWindowClose />
+            </IconContext.Provider>
+          </button>
+          {this.props.children}
+        </div>
       </div>,
       modalRoot
     );
   }
 }
 
-Modal.defaultProps = {
-  alt: 'large image',
-};
-
 Modal.propTypes = {
-  src: PropTypes.string.isRequired,
-  alt: PropTypes.string,
   toggleModal: PropTypes.func.isRequired,
 };
