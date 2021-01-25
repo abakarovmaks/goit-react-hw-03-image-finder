@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Container from './Components/Container/Container';
 import Searchbar from './Components/Searchbar/Searchbar';
-import ImageGallery from './Components/ImageGallery/ImageGallery';
 import Button from './Components/Button/Button';
-// import Loader from './Components/Loader/Loader';
-// import Modal from './Components/Modal/Modal';
+import ImageGalleryView from './Components/ImageGalleryView/';
 
 export default class App extends Component {
   state = {
     searchQuery: '',
     searchPage: 1,
+    moreImagesAvailable: false,
   };
 
   getSearchQuery = (query) => {
@@ -24,16 +25,26 @@ export default class App extends Component {
     this.setState({ searchPage: 1 });
   };
 
+  updateImageAvialability = (status) => {
+    this.setState({ moreImagesAvailable: status });
+  };
+
   render() {
+    const { searchQuery, searchPage, moreImagesAvailable } = this.state;
+
     return (
       <Container>
         <Searchbar getSearchQuery={this.getSearchQuery} />
-        <ImageGallery
-          searchQuery={this.searchQuery}
-          page={this.searchPage}
+        <ImageGalleryView
+          searchQuery={searchQuery}
+          page={searchPage}
           resetSearchPage={this.resetSearchPage}
+          updateImageAvialability={this.updateImageAvialability}
         />
-        <Button updateSearchPage={this.updateSearchPage} />
+        {moreImagesAvailable && (
+          <Button updateSearchPage={this.updateSearchPage} />
+        )}
+        <ToastContainer autoClose={3000} />
       </Container>
     );
   }
