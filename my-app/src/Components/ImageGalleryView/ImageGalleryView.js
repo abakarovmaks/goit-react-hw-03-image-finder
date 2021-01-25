@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { toast } from 'react-toastify';
-import HashLoader from 'react-spinners/HashLoader';
+// import { css } from '@emotion/core';
+import Loader from 'react-loader-spinner';
 import ProgressiveImage from 'react-progressive-image';
 import PropTypes from 'prop-types';
 import imageAPI from '../../services/pixabey-api';
@@ -54,14 +55,13 @@ export default class ImageGalleryView extends Component {
   };
 
   renderNewSearchQuery = (nextQuery, nextPage) => {
-    this.props.resetSearchPage();
+    this.props.resetPage();
     this.setState({ images: null, status: Status.PENDING });
     this.props.updateImageAvialability(false);
 
     imageAPI
       .fetchImages(nextQuery, nextPage)
       .then((images) => {
-        console.log(images);
         if (images.totalHits === 0) {
           toast.error(`No images for ${nextQuery}. Please try another query.`);
           this.setState({
@@ -71,9 +71,7 @@ export default class ImageGalleryView extends Component {
           return;
         }
         if (images.hits.length === 0) {
-          toast.error(
-            `Oops! Pixabay failed us and forgot to send images. Please refresh page & try again.`
-          );
+          toast.error(`Oops! Please refresh page & try again.`);
           this.setState({
             status: Status.REJECTED,
           });
@@ -105,7 +103,7 @@ export default class ImageGalleryView extends Component {
       .catch((error) => this.setState({ error, status: Status.REJECTED }))
       .finally((data) => {
         window.scrollTo({
-          top: document.documentElement.scrollHeight - 1300,
+          top: document.documentElement.scrollHeight - 1200,
           behavior: 'smooth',
         });
         this.updateImageAvialability();
@@ -120,7 +118,7 @@ export default class ImageGalleryView extends Component {
     }));
   };
 
-  showBigImageInModal = (e) => {
+  imageModal = (e) => {
     this.toggleModal();
     this.setState((prevState) => ({
       imageInModal: prevState.imageInModal ? '' : e.target.dataset.image,
@@ -140,20 +138,19 @@ export default class ImageGalleryView extends Component {
     if (status === Status.IDLE) {
       return (
         <div>
-          <img src={findSomething} alt="please enter a query" />
+          <img src={findSomething} alt="Please enter a query" />
         </div>
       );
     }
 
     if (status === Status.PENDING) {
       return (
-        <HashLoader
-          css={`
-            margin-top: 80px;
-          `}
-          size={250}
-          color={'orange'}
-          loading={true}
+        <Loader
+          type="Circles"
+          color="orange"
+          height={250}
+          width={250}
+          timeout={3000}
         />
       );
     }
@@ -193,6 +190,6 @@ export default class ImageGalleryView extends Component {
 ImageGalleryView.propTypes = {
   searchQuery: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
-  resetSearchPage: PropTypes.func.isRequired,
+  resetPage: PropTypes.func.isRequired,
   updateImageAvialability: PropTypes.func.isRequired,
 };

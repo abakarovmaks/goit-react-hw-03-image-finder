@@ -21,7 +21,7 @@ export default class App extends Component {
     this.setState((prevState) => ({ searchPage: prevState.searchPage + 1 }));
   };
 
-  resetSearchPage = () => {
+  resetPage = () => {
     this.setState({ searchPage: 1 });
   };
 
@@ -38,7 +38,7 @@ export default class App extends Component {
         <ImageGalleryView
           searchQuery={searchQuery}
           page={searchPage}
-          resetSearchPage={this.resetSearchPage}
+          resetPage={this.resetPage}
           updateImageAvialability={this.updateImageAvialability}
         />
         {moreImagesAvailable && <Button updatePage={this.updatePage} />}

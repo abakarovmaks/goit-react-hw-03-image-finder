@@ -1,7 +1,9 @@
 .header {
+  top: 0;
+  left: 0;
   position: sticky;
   width: 100%;
-  z-index: 1100;
+  z-index: 999;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,7 +18,7 @@
 .form {
   position: relative;
 
-  width: 30%;
+  width: 25%;
 }
 
 .input {
@@ -49,7 +51,7 @@
 
   background-color: transparent;
 
-  transition: color 250ms ease;
+  transition: color 250ms ease-in-out;
 
   cursor: pointer;
 }

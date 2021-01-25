@@ -6,6 +6,11 @@ import { toast } from 'react-toastify';
 import styles from './Searchbar.module.css';
 
 export default class Searchbar extends Component {
+  constructor(props) {
+    super(props);
+    this.button = React.createRef();
+  }
+
   state = {
     value: '',
   };
@@ -24,10 +29,10 @@ export default class Searchbar extends Component {
     }
     this.props.getSearchQuery(query);
     this.setState({ value: '' });
+    this.button.current.blur();
   };
 
   render() {
-    const { value } = this.state;
     return (
       <header className={styles.header}>
         <form className={styles.form} onSubmit={this.handleSubmit}>
@@ -40,7 +45,7 @@ export default class Searchbar extends Component {
           <input
             className={styles.input}
             type="text"
-            value={value}
+            value={this.state.value}
             placeholder="Search images and photos"
             onChange={this.handleInput}
           />
