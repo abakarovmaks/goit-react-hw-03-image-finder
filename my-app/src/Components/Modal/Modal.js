@@ -37,7 +37,7 @@ export default class Modal extends Component {
       <div className={styles.backdrop} onClick={this.handleBackdropClick}>
         <div className={styles.content}>
           <button className={styles.closeIcon} onClick={this.handleBtnClick}>
-            <IconContext.Provider value={{ size: '36px' }}>
+            <IconContext.Provider value={{ size: '50px' }}>
               <FaWindowClose />
             </IconContext.Provider>
           </button>

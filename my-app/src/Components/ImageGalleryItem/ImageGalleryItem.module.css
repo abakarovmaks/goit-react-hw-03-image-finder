@@ -1,7 +1,7 @@
 .item {
   margin: 15px;
 
-  width: calc((100% - 90px) / 3);
+  width: calc((100% - 120px) / 3);
 
   border-radius: 10px;
   overflow: hidden;
@@ -21,4 +21,28 @@
 .image:hover {
   transform: scale(0.9);
   cursor: pointer;
+}
+
+.closeIcon {
+  position: absolute;
+  top: -4px;
+  right: 13px;
+
+  width: 36px;
+  height: 36px;
+
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline: none;
+  background-color: transparent;
+
+  cursor: pointer;
+
+  transition: color 250ms ease-in-out;
+}
+
+.closeIcon:hover,
+.closeIcon:focus {
+  color: orange;
 }

@@ -7,9 +7,8 @@ export default function ImageGalleryItem({ image, imageModal }) {
   return (
     <li className={styles.item}>
       <ProgressiveImage src={image.webformatURL} placeholder={image.previewURL}>
-        {(src, loading) => (
+        {(src) => (
           <img
-            style={{ opacity: loading ? 0.5 : 1 }}
             src={src}
             alt={image.tags}
             data-image={image.largeImageURL}

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { toast } from 'react-toastify';
-// import { css } from '@emotion/core';
 import Loader from 'react-loader-spinner';
 import ProgressiveImage from 'react-progressive-image';
 import PropTypes from 'prop-types';
@@ -146,6 +145,7 @@ export default class ImageGalleryView extends Component {
     if (status === Status.PENDING) {
       return (
         <Loader
+          className={styles.spinner}
           type="Circles"
           color="orange"
           height={250}
@@ -170,14 +170,7 @@ export default class ImageGalleryView extends Component {
           {modalIsOpen && (
             <Modal toggleModal={this.toggleModal}>
               <ProgressiveImage src={imageInModal} placeholder={activeImage}>
-                {(src, loading) => (
-                  <img
-                    style={{ opacity: loading ? 0.5 : 1 }}
-                    src={src}
-                    alt=""
-                    className={styles.image}
-                  />
-                )}
+                {(src) => <img src={src} alt="" className={styles.image} />}
               </ProgressiveImage>
             </Modal>
           )}

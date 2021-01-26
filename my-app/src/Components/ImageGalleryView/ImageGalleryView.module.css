@@ -4,3 +4,8 @@
   height: 550px;
   object-fit: cover;
 }
+
+.spinner {
+  padding-top: 150px;
+  size: 200px;
+}
